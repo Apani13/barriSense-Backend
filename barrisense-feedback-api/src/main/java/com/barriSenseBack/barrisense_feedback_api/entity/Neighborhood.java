@@ -5,14 +5,14 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "barrios") // Nombramos la tabla "barrios" para que coincida con tu data.sql
+@Table(name = "barrios")
 public class Neighborhood {
 
     @Id
-    // No usamos @GeneratedValue porque los IDs los estás poniendo tú en data.sql
+
     private Long id;
 
-    @Column(name = "nombre") // Nombramos la columna "nombre" para que coincida con tu data.sql
+    @Column(name = "nombre")
     private String name;
 
     private String district;
@@ -22,7 +22,7 @@ public class Neighborhood {
     @Column(name = "postal_code")
     private List<Long> cp;
 
-    // Constructor vacío requerido por JPA
+
     public Neighborhood() {
     }
 

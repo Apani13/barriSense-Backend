@@ -26,31 +26,31 @@ class FeedbackControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Autowired
     private FeedbackService feedbackService;
 
-
     @TestConfiguration
     static class TestConfig {
-
         @Bean
         public FeedbackService feedbackService() {
             return Mockito.mock(FeedbackService.class);
         }
     }
 
-
-
     @Test
     void whenGetAllFeedbacks_shouldReturnFeedbackList() throws Exception {
         // ARRANGE
-        Feedback feedback1 = new Feedback(1L, 1L, "Hood1", "Content1");
+        Feedback feedback1 = new Feedback();
         feedback1.setId(1L);
+        feedback1.setUserId(1L);
+        feedback1.setHoodId(1L);
+        feedback1.setHoodName("Hood1");
+        feedback1.setContent("Content1");
+
         List<Feedback> feedbackList = Arrays.asList(feedback1);
         when(feedbackService.findAll()).thenReturn(feedbackList);
 
-        // ACT ASSERT
+        // ACT & ASSERT
         mockMvc.perform(get("/api/feedbacks"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -61,11 +61,16 @@ class FeedbackControllerTest {
     @Test
     void whenGetFeedbackById_withValidId_shouldReturnFeedback() throws Exception {
         // ARRANGE
-        Feedback feedback = new Feedback(1L, 1L, "Hood1", "Content1");
+        Feedback feedback = new Feedback();
         feedback.setId(1L);
+        feedback.setUserId(1L);
+        feedback.setHoodId(1L);
+        feedback.setHoodName("Hood1");
+        feedback.setContent("Content1");
+
         when(feedbackService.findById(1L)).thenReturn(Optional.of(feedback));
 
-        // ACT ASSERT
+        // ACT & ASSERT
         mockMvc.perform(get("/api/feedbacks/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
@@ -77,7 +82,7 @@ class FeedbackControllerTest {
         // ARRANGE
         when(feedbackService.findById(99L)).thenReturn(Optional.empty());
 
-        // ACT ASSERT
+        // ACT & ASSERT
         mockMvc.perform(get("/api/feedbacks/99"))
                 .andExpect(status().isNotFound());
     }
@@ -89,7 +94,7 @@ class FeedbackControllerTest {
         FeedbackCountDTO dto = new FeedbackCountDTO(hoodId, 42L);
         when(feedbackService.countComplaintsByHoodId(hoodId)).thenReturn(dto);
 
-        // ACT ASSERT
+        // ACT & ASSERT
         mockMvc.perform(get("/api/feedbacks/count/by-neighborhood/2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.neighborhoodId").value(2))
@@ -100,21 +105,25 @@ class FeedbackControllerTest {
     void whenGetFeedbacksByNeighborhood_shouldReturnFilteredList() throws Exception {
         // ARRANGE
         Long hoodId = 3L;
-        Feedback feedback1 = new Feedback(1L, hoodId, "Hood3", "ContentA");
+
+        Feedback feedback1 = new Feedback();
+        feedback1.setUserId(1L);
+        feedback1.setHoodId(hoodId);
+        feedback1.setHoodName("Hood3");
+        feedback1.setContent("ContentA");
+
         List<Feedback> filteredList = Arrays.asList(feedback1);
         when(feedbackService.findAllByHoodId(hoodId)).thenReturn(filteredList);
 
-        // ACT ASSERT
+        // ACT & ASSERT
         mockMvc.perform(get("/api/feedbacks/by-neighborhood/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
                 .andExpect(jsonPath("$[0].hoodId").value(3));
     }
 
-
     @Test
     void whenGetAllComplaintCountsByNeighborhood_shouldReturnDtoList() throws Exception {
-
         // ARRANGE
         FeedbackCountDTO dto1 = new FeedbackCountDTO(1L, 15L);
         FeedbackCountDTO dto2 = new FeedbackCountDTO(2L, 42L);
@@ -122,9 +131,9 @@ class FeedbackControllerTest {
 
         when(feedbackService.countAllComplaintsByNeighborhood()).thenReturn(mockDtoList);
 
-        // ACT ASSERT
+        // ACT & ASSERT
         mockMvc.perform(get("/api/feedbacks/count/by-neighborhood/all"))
-                .andExpect(status().isOk()) // Esperamos un 200 OK
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.size()").value(2))
                 .andExpect(jsonPath("$[0].neighborhoodId").value(1))

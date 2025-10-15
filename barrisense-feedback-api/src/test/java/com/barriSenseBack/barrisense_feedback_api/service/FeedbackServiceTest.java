@@ -28,8 +28,18 @@ class FeedbackServiceTest {
     @Test
     void whenFindAll_shouldReturnFeedbackList() {
         // ARRANGE
-        Feedback feedback1 = new Feedback(1L, 1L, "Test Hood 1", "Content 1");
-        Feedback feedback2 = new Feedback(2L, 2L, "Test Hood 2", "Content 2");
+        Feedback feedback1 = new Feedback(); // Usa el constructor vacío
+        feedback1.setUserId(1L);
+        feedback1.setHoodId(1L);
+        feedback1.setHoodName("Test Hood 1");
+        feedback1.setContent("Content 1");
+
+
+        Feedback feedback2 = new Feedback(); // Usa el constructor vacío
+        feedback1.setUserId(2L);
+        feedback1.setHoodId(2L);
+        feedback1.setHoodName("Test Hood 1");
+        feedback1.setContent("Content 1");
         List<Feedback> feedbackList = Arrays.asList(feedback1, feedback2);
 
         when(feedbackRepository.findAll()).thenReturn(feedbackList);
@@ -45,10 +55,18 @@ class FeedbackServiceTest {
 
     @Test
     void whenFindById_withValidId_shouldReturnFeedback() {
+
         // ARRANGE
         Long feedbackId = 1L;
-        Feedback feedback = new Feedback(1L, 1L, "Test Hood", "Content");
+
+
+        Feedback feedback = new Feedback();
         feedback.setId(feedbackId);
+        feedback.setUserId(1L);
+        feedback.setHoodId(1L);
+        feedback.setHoodName("Test Hood");
+        feedback.setContent("Content");
+
 
         when(feedbackRepository.findById(feedbackId)).thenReturn(Optional.of(feedback));
 
@@ -57,7 +75,7 @@ class FeedbackServiceTest {
 
         // ASSERT
         assertTrue(result.isPresent());
-        assertEquals(feedbackId, result.get().getId());
+        assertEquals(feedbackId, result.get().getId()); // Esta línea ahora funcionará
     }
 
     @Test
@@ -93,8 +111,24 @@ class FeedbackServiceTest {
     void whenFindAllByHoodId_shouldReturnFilteredList() {
         // ARRANGE
         Long hoodId = 5L;
-        Feedback feedback1 = new Feedback(1L, hoodId, "Hood 5", "Content A");
-        Feedback feedback2 = new Feedback(2L, hoodId, "Hood 5", "Content B");
+
+        // --- ESTA ES LA PARTE "TRADUCIDA" ---
+
+        // Creamos el primer feedback usando el constructor vacío y los setters
+        Feedback feedback1 = new Feedback();
+        feedback1.setUserId(1L);
+        feedback1.setHoodId(hoodId);
+        feedback1.setHoodName("Hood 5");
+        feedback1.setContent("Content A");
+
+        // Hacemos lo mismo para el segundo
+        Feedback feedback2 = new Feedback();
+        feedback2.setUserId(2L);
+        feedback2.setHoodId(hoodId);
+        feedback2.setHoodName("Hood 5");
+        feedback2.setContent("Content B");
+
+        // El resto del test se queda igual
         List<Feedback> filteredList = Arrays.asList(feedback1, feedback2);
 
         when(feedbackRepository.findByHoodId(hoodId)).thenReturn(filteredList);

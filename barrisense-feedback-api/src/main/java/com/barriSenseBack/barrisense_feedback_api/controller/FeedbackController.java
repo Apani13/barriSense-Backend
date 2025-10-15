@@ -90,5 +90,7 @@ public class FeedbackController {
         return feedbackService.countAllComplaintsByNeighborhood();
     }
 
+    // http://localhost:8080/api/feedbacks/count/by-neighborhood/all
+
 }
 

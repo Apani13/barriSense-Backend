@@ -73,9 +73,17 @@ public class DataInitializer implements CommandLineRunner {
             Long userIdRandom = (long) (random.nextInt(50) + 1);
             String quejaRandom = quejas.get(random.nextInt(quejas.size()));
 
-            Feedback feedback = new Feedback(userIdRandom, barrioSeleccionado.getId(), barrioSeleccionado.getName(), quejaRandom);
+            Feedback feedback = new Feedback(); // 1. Usa el constructor vacío que creó @NoArgsConstructor
+
+            // 2. Asigna los valores usando los setters que creó @Data
+            feedback.setUserId(userIdRandom);
+            feedback.setHoodId(barrioSeleccionado.getId());
+            feedback.setHoodName(barrioSeleccionado.getName());
+            feedback.setContent(quejaRandom);
+
             feedbackRepository.save(feedback);
         }
+
 
         log.info("¡Se han creado {} feedbacks de prueba!", numeroDeFeedbacksACrear);
     }
