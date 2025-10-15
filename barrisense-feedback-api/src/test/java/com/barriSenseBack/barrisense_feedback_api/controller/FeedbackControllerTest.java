@@ -110,4 +110,26 @@ class FeedbackControllerTest {
                 .andExpect(jsonPath("$.size()").value(1))
                 .andExpect(jsonPath("$[0].hoodId").value(3));
     }
+
+
+    @Test
+    void whenGetAllComplaintCountsByNeighborhood_shouldReturnDtoList() throws Exception {
+
+        // ARRANGE
+        FeedbackCountDTO dto1 = new FeedbackCountDTO(1L, 15L);
+        FeedbackCountDTO dto2 = new FeedbackCountDTO(2L, 42L);
+        List<FeedbackCountDTO> mockDtoList = Arrays.asList(dto1, dto2);
+
+        when(feedbackService.countAllComplaintsByNeighborhood()).thenReturn(mockDtoList);
+
+        // ACT ASSERT
+        mockMvc.perform(get("/api/feedbacks/count/by-neighborhood/all"))
+                .andExpect(status().isOk()) // Esperamos un 200 OK
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.size()").value(2))
+                .andExpect(jsonPath("$[0].neighborhoodId").value(1))
+                .andExpect(jsonPath("$[0].FeedbackCount").value(15))
+                .andExpect(jsonPath("$[1].neighborhoodId").value(2))
+                .andExpect(jsonPath("$[1].FeedbackCount").value(42));
+    }
 }

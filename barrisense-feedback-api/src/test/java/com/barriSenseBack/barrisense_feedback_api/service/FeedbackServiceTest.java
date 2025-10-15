@@ -107,4 +107,27 @@ class FeedbackServiceTest {
         assertEquals(2, result.size());
         assertEquals(hoodId, result.get(0).getHoodId());
     }
+
+
+    @Test
+    void whenCountAllComplaintsByNeighborhood_shouldReturnDtoList() {
+        // ARRANGE
+
+        FeedbackCountDTO dto1 = new FeedbackCountDTO(1L, 15L);
+        FeedbackCountDTO dto2 = new FeedbackCountDTO(2L, 42L);
+        List<FeedbackCountDTO> mockDtoList = Arrays.asList(dto1, dto2);
+
+
+        when(feedbackRepository.countAllGroupByHoodId()).thenReturn(mockDtoList);
+
+        // ACT
+        List<FeedbackCountDTO> result = feedbackService.countAllComplaintsByNeighborhood();
+
+        // ASSERT
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(1L, result.get(0).neighborhoodId());
+        assertEquals(15L, result.get(0).FeedbackCount());
+        assertEquals(42L, result.get(1).FeedbackCount());
+    }
 }

@@ -79,5 +79,16 @@ public class FeedbackController {
         return feedbackService.findAllByHoodId(hoodId);
     }
 
+
+    /**
+     * Endpoint para obtener el número de quejas para todos los barrios.
+     * HTTP GET /api/feedbacks/count/by-neighborhood/all
+     * @return Una lista de objetos JSON, cada uno con un ID de barrio y su total de quejas.
+     */
+    @GetMapping("/count/by-neighborhood/all")
+    public List<FeedbackCountDTO> getAllComplaintCountsByNeighborhood() {
+        return feedbackService.countAllComplaintsByNeighborhood();
+    }
+
 }
 

@@ -59,4 +59,13 @@ public class FeedbackService {
     public List<Feedback> findAllByHoodId(Long hoodId) {
         return feedbackRepository.findByHoodId(hoodId);
     }
+
+
+    /**
+     * Devuelve una lista con el total de quejas para cada barrio.
+     * @return una lista de objetos FeedbackCountDTO.
+     */
+    public List<FeedbackCountDTO> countAllComplaintsByNeighborhood() {
+        return feedbackRepository.countAllGroupByHoodId();
+    }
 }

@@ -1,8 +1,10 @@
 package com.barriSenseBack.barrisense_feedback_api.repository;
 
 
+import com.barriSenseBack.barrisense_feedback_api.dto.FeedbackCountDTO;
 import com.barriSenseBack.barrisense_feedback_api.entity.Feedback;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,4 +31,13 @@ public interface FeedbackRepository extends JpaRepository<Feedback,Long> {
      * @return una lista de las quejas (objetos Feedback).
      */
     List<Feedback> findByHoodId(Long hoodId);
+
+
+    /**
+     * Cuenta todas las quejas y las agrupa por ID de barrio.
+     * Utiliza una consulta JPQL personalizada para devolver una lista de DTOs.
+     * @return Una lista de FeedbackCountDTO, uno por cada barrio que tenga quejas.
+     */
+    @Query("SELECT new com.barriSenseBack.barrisense_feedback_api.dto.FeedbackCountDTO(f.hoodId, COUNT(f)) FROM Feedback f GROUP BY f.hoodId")
+    List<FeedbackCountDTO> countAllGroupByHoodId();
 }
