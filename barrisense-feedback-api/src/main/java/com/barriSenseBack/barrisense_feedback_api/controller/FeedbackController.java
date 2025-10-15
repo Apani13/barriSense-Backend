@@ -90,6 +90,12 @@ public class FeedbackController {
     // http://localhost:8080/api/feedbacks/count/by-neighborhood/all
 
 
+    /**
+     * Endpoint para crear un nuevo feedback.
+     * HTTP POST /api/feedbacks
+     * @param feedback El objeto {@link Feedback} recibido en el cuerpo de la petición.
+     * @return El feedback guardado, envuelto en una respuesta HTTP 200 OK.
+     */
     @PostMapping
     public ResponseEntity<Feedback> createFeedback(@RequestBody Feedback feedback) {
         Feedback savedFeedback = feedbackService.save(feedback);
