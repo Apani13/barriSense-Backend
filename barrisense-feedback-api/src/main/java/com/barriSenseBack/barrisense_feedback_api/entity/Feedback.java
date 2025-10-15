@@ -1,15 +1,14 @@
 package com.barriSenseBack.barrisense_feedback_api.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data // Crea todos los Getters, Setters, toString, equals, etc.
-@NoArgsConstructor // Crea un constructor vacío (public Feedback() {})
-@AllArgsConstructor // Crea un constructor con TODOS los campos
+import jakarta.persistence.*;
+import lombok.Getter;
+
+
+
 @Entity
 @Table(name = "feedbacks")
+
 public class Feedback {
 
     @Id
@@ -29,4 +28,56 @@ public class Feedback {
     private String content;
 
 
+    public Feedback() {
+    }
+
+
+    public Feedback(Long userId, Long hoodId, String hoodName, String content) {
+        this.userId = userId;
+        this.hoodId = hoodId;
+        this.hoodName = hoodName;
+        this.content = content;
+    }
+
+    // --- Getters y Setters ---
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getHoodId() {
+        return hoodId;
+    }
+
+    public void setHoodId(Long hoodId) {
+        this.hoodId = hoodId;
+    }
+
+    public String getHoodName() {
+        return hoodName;
+    }
+
+    public void setHoodName(String hoodName) {
+        this.hoodName = hoodName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

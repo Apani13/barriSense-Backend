@@ -15,6 +15,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+
+/**
+ * Componente que se ejecuta al inicio de la aplicación para poblar la base de datos con datos de prueba.
+ * <p>
+ * Implementa {@link CommandLineRunner}, lo que garantiza que el método {@code run} se ejecute una sola vez
+ * después de que el contexto de la aplicación se haya cargado.
+ * Su principal responsabilidad es crear un conjunto de feedbacks (quejas) de ejemplo si la base de datos está vacía,
+ * asegurando un entorno de desarrollo con datos realistas.
+ *
+ * @author El equipo de BarriSense
+ * @since 2025-10-15
+ */
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -32,7 +44,7 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        // Solo creamos datos si no hay feedbacks existentes
+
         if (feedbackRepository.count() > 0) {
             log.info("La base de datos de feedbacks ya está poblada. No se crearán nuevos datos.");
             return;
@@ -53,8 +65,8 @@ public class DataInitializer implements CommandLineRunner {
                 "Fiestas en pisos turísticos hasta altas horas.", "El comercio local desaparece."
         );
 
-        // IDs de barrios turísticos "calientes" para concentrar quejas
-        List<Long> hotspotIds = Arrays.asList(1L, 2L, 3L, 4L, 6L, 31L); // El Raval, Gòtic, Barceloneta, Ribera, Sagrada Familia, Gràcia
+
+        List<Long> hotspotIds = Arrays.asList(1L, 2L, 3L, 4L, 6L, 31L);
 
         int numeroDeFeedbacksACrear = 300;
         Random random = new Random();
@@ -62,7 +74,7 @@ public class DataInitializer implements CommandLineRunner {
         for (int i = 0; i < numeroDeFeedbacksACrear; i++) {
             Neighborhood barrioSeleccionado;
 
-            // 70% de probabilidad de que la queja sea en un punto caliente
+
             if (random.nextInt(10) < 7) {
                 Long hotspotId = hotspotIds.get(random.nextInt(hotspotIds.size()));
                 barrioSeleccionado = neighborhoods.stream().filter(n -> n.getId() == hotspotId).findFirst().orElse(neighborhoods.get(0));
@@ -73,17 +85,9 @@ public class DataInitializer implements CommandLineRunner {
             Long userIdRandom = (long) (random.nextInt(50) + 1);
             String quejaRandom = quejas.get(random.nextInt(quejas.size()));
 
-            Feedback feedback = new Feedback(); // 1. Usa el constructor vacío que creó @NoArgsConstructor
-
-            // 2. Asigna los valores usando los setters que creó @Data
-            feedback.setUserId(userIdRandom);
-            feedback.setHoodId(barrioSeleccionado.getId());
-            feedback.setHoodName(barrioSeleccionado.getName());
-            feedback.setContent(quejaRandom);
-
+            Feedback feedback = new Feedback(userIdRandom, barrioSeleccionado.getId(), barrioSeleccionado.getName(), quejaRandom);
             feedbackRepository.save(feedback);
         }
-
 
         log.info("¡Se han creado {} feedbacks de prueba!", numeroDeFeedbacksACrear);
     }
