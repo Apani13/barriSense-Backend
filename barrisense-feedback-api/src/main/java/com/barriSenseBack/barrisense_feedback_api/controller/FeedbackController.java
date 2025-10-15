@@ -6,10 +6,7 @@ import com.barriSenseBack.barrisense_feedback_api.entity.Feedback;
 import com.barriSenseBack.barrisense_feedback_api.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -91,6 +88,13 @@ public class FeedbackController {
     }
 
     // http://localhost:8080/api/feedbacks/count/by-neighborhood/all
+
+
+    @PostMapping("/postFeedback")
+    public ResponseEntity<Feedback> createFeedback(@RequestBody Feedback feedback) {
+        Feedback savedFeedback = feedbackService.save(feedback);
+        return ResponseEntity.ok(savedFeedback);
+    }
 
 }
 

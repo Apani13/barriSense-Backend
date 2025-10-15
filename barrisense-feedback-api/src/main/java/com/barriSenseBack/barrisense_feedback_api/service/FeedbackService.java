@@ -68,4 +68,9 @@ public class FeedbackService {
     public List<FeedbackCountDTO> countAllComplaintsByNeighborhood() {
         return feedbackRepository.countAllGroupByHoodId();
     }
+
+
+    public Feedback save(Feedback feedback) {
+        return feedbackRepository.save(feedback);
+    }
 }
