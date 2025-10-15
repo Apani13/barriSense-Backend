@@ -27,6 +27,7 @@ class FeedbackServiceTest {
 
     @Test
     void whenFindAll_shouldReturnFeedbackList() {
+
         // ARRANGE
         Feedback feedback1 = new Feedback(1L, 1L, "Test Hood 1", "Content 1");
         Feedback feedback2 = new Feedback(2L, 2L, "Test Hood 2", "Content 2");
@@ -91,6 +92,7 @@ class FeedbackServiceTest {
 
     @Test
     void whenFindAllByHoodId_shouldReturnFilteredList() {
+
         // ARRANGE
         Long hoodId = 5L;
         Feedback feedback1 = new Feedback(1L, hoodId, "Hood 5", "Content A");
@@ -111,6 +113,7 @@ class FeedbackServiceTest {
 
     @Test
     void whenCountAllComplaintsByNeighborhood_shouldReturnDtoList() {
+
         // ARRANGE
 
         FeedbackCountDTO dto1 = new FeedbackCountDTO(1L, 15L);

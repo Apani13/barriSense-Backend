@@ -44,6 +44,7 @@ class FeedbackControllerTest {
 
     @Test
     void whenGetAllFeedbacks_shouldReturnFeedbackList() throws Exception {
+
         // ARRANGE
         Feedback feedback1 = new Feedback(1L, 1L, "Hood1", "Content1");
         feedback1.setId(1L);
@@ -60,6 +61,7 @@ class FeedbackControllerTest {
 
     @Test
     void whenGetFeedbackById_withValidId_shouldReturnFeedback() throws Exception {
+
         // ARRANGE
         Feedback feedback = new Feedback(1L, 1L, "Hood1", "Content1");
         feedback.setId(1L);
@@ -74,6 +76,7 @@ class FeedbackControllerTest {
 
     @Test
     void whenGetFeedbackById_withInvalidId_shouldReturnNotFound() throws Exception {
+
         // ARRANGE
         when(feedbackService.findById(99L)).thenReturn(Optional.empty());
 
@@ -84,6 +87,7 @@ class FeedbackControllerTest {
 
     @Test
     void whenGetComplaintCountByNeighborhood_shouldReturnCountDTO() throws Exception {
+
         // ARRANGE
         Long hoodId = 2L;
         FeedbackCountDTO dto = new FeedbackCountDTO(hoodId, 42L);
@@ -98,6 +102,7 @@ class FeedbackControllerTest {
 
     @Test
     void whenGetFeedbacksByNeighborhood_shouldReturnFilteredList() throws Exception {
+
         // ARRANGE
         Long hoodId = 3L;
         Feedback feedback1 = new Feedback(1L, hoodId, "Hood3", "ContentA");
