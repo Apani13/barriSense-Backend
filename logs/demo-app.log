@@ -1,0 +1,54 @@
+2025-10-15T18:30:39.590+02:00 ERROR 5064 --- [barrisense-feedback-api] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'logging.level.com.hackthon.demo' to org.springframework.boot.logging.LogLevel:
+
+    Property: logging.level.com.hackthon.demo
+    Value: "DEBUG # Nivel de log para vuestro paquete"
+    Origin: class path resource [application.properties] - 49:33
+    Reason: failed to convert java.lang.String to org.springframework.boot.logging.LogLevel (caused by java.lang.IllegalArgumentException: No enum constant org.springframework.boot.logging.LogLevel.DEBUG # Nivel de log para vuestro paquete)
+
+Action:
+
+Update your application's configuration. The following values are valid:
+
+    DEBUG
+    ERROR
+    FATAL
+    INFO
+    OFF
+    TRACE
+    WARN
+
+2025-10-15T18:31:41.203+02:00 ERROR 16464 --- [barrisense-feedback-api] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'logging.level.com.hackthon.demo' to org.springframework.boot.logging.LogLevel:
+
+    Property: logging.level.com.hackthon.demo
+    Value: "DEBUG # Nivel de log para vuestro paquete"
+    Origin: class path resource [application.properties] - 49:33
+    Reason: failed to convert java.lang.String to org.springframework.boot.logging.LogLevel (caused by java.lang.IllegalArgumentException: No enum constant org.springframework.boot.logging.LogLevel.DEBUG # Nivel de log para vuestro paquete)
+
+Action:
+
+Update your application's configuration. The following values are valid:
+
+    DEBUG
+    ERROR
+    FATAL
+    INFO
+    OFF
+    TRACE
+    WARN
+
