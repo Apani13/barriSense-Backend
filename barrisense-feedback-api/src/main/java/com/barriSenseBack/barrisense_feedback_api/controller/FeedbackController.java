@@ -90,7 +90,7 @@ public class FeedbackController {
     // http://localhost:8080/api/feedbacks/count/by-neighborhood/all
 
 
-    @PostMapping("/postFeedback")
+    @PostMapping
     public ResponseEntity<Feedback> createFeedback(@RequestBody Feedback feedback) {
         Feedback savedFeedback = feedbackService.save(feedback);
         return ResponseEntity.ok(savedFeedback);
