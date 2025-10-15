@@ -1,27 +1,38 @@
 package com.barriSenseBack.barrisense_feedback_api.entity;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
-
+@Entity
+@Table(name = "barrios") // Nombramos la tabla "barrios" para que coincida con tu data.sql
 public class Neighborhood {
 
-    private long id;
+    @Id
+    // No usamos @GeneratedValue porque los IDs los estás poniendo tú en data.sql
+    private Long id;
+
+    @Column(name = "nombre") // Nombramos la columna "nombre" para que coincida con tu data.sql
     private String name;
+
     private String district;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "neighborhood_postal_codes", joinColumns = @JoinColumn(name = "neighborhood_id"))
+    @Column(name = "postal_code")
     private List<Long> cp;
 
-    public Neighborhood(String name, long id, String district, List<Long> cp) {
-        this.name = name;
-        this.id = id;
-        this.district = district;
-        this.cp = cp;
+    // Constructor vacío requerido por JPA
+    public Neighborhood() {
     }
 
-    public long getId() {
+    // --- Getters y Setters ---
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

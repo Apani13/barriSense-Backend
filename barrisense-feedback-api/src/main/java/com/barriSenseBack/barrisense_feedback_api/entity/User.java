@@ -14,7 +14,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true) // Cambiado para que el username sea único
     private String username;
 
     @Column(nullable = false, unique = true)
@@ -23,21 +23,21 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    // Si tienes la relación con Roles, debería estar aquí
+    // @ManyToMany(...)
+    // private Set<Role> roles;
 
     public User() {
     }
 
-
-
-    // Constructor para crear nuevos usuarios fácilmente (sin el id)
-    public User(String userName, String email, String password) {
-        this.username = userName;
+    // Constructor corregido para usar 'username'
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
-
     }
 
-    // --- Getters y Setters ---
+    // --- Getters y Setters CORREGIDOS ---
 
     public Long getId() {
         return id;
@@ -47,12 +47,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String userName) {
-        this.username = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -67,11 +67,9 @@ public class User {
         return password;
     }
 
-
-
     public void setPassword(String password) {
         this.password = password;
     }
-}
 
+}
 

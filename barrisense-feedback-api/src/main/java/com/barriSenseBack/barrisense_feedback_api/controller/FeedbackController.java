@@ -1,6 +1,7 @@
 package com.barriSenseBack.barrisense_feedback_api.controller;
 
 
+import com.barriSenseBack.barrisense_feedback_api.dto.FeedbackCountDTO;
 import com.barriSenseBack.barrisense_feedback_api.entity.Feedback;
 import com.barriSenseBack.barrisense_feedback_api.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class FeedbackController {
         return feedbackService.findAll();
     }
 
+    // http://localhost:8080/api/feedbacks
+
     /**
      * Endpoint para obtener un feedback por su ID.
      * HTTP GET /api/feedbacks/{id}
@@ -51,7 +54,30 @@ public class FeedbackController {
     }
 
 
-    // /api/feedbacks/post
+    /**
+     * Endpoint para obtener el número de quejas por ID de barrio.
+     * HTTP GET /api/feedbacks/count/by-neighborhood/{hoodId}
+     * @param hoodId El ID del barrio pasado en la URL.
+     * @return Un objeto JSON con el ID del barrio y el total de quejas.
+     */
+    @GetMapping("/count/by-neighborhood/{hoodId}")
+    public FeedbackCountDTO getComplaintCountByNeighborhood(@PathVariable Long hoodId) {
+        return feedbackService.countComplaintsByHoodId(hoodId);
+    }
+
+    // http://localhost:8080/api/feedbacks/count/by-neighborhood/2
+
+
+    /**
+     * Endpoint para obtener todas las quejas de un barrio específico por su ID.
+     * HTTP GET /api/feedbacks/by-neighborhood/{hoodId}
+     * @param hoodId El ID del barrio pasado en la URL.
+     * @return Una lista de objetos Feedback en formato JSON.
+     */
+    @GetMapping("/by-neighborhood/{hoodId}")
+    public List<Feedback> getFeedbacksByNeighborhood(@PathVariable Long hoodId) {
+        return feedbackService.findAllByHoodId(hoodId);
+    }
 
 }
 

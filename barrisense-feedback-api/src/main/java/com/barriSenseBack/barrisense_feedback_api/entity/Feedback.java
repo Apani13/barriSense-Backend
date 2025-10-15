@@ -2,9 +2,13 @@ package com.barriSenseBack.barrisense_feedback_api.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+
+
 
 @Entity
 @Table(name = "feedbacks")
+
 public class Feedback {
 
     @Id

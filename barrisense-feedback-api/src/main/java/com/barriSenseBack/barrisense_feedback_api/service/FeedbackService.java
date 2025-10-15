@@ -1,6 +1,7 @@
 package com.barriSenseBack.barrisense_feedback_api.service;
 
 
+import com.barriSenseBack.barrisense_feedback_api.dto.FeedbackCountDTO;
 import com.barriSenseBack.barrisense_feedback_api.entity.Feedback;
 import com.barriSenseBack.barrisense_feedback_api.repository.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,26 @@ public class FeedbackService {
     public Optional<Feedback> findById(Long id) {
 
         return feedbackRepository.findById(id);
+    }
+
+
+    /**
+     * Calcula el número de quejas para un barrio y devuelve el resultado en un DTO.
+     * @param hoodId El ID del barrio.
+     * @return un DTO con el ID del barrio y el total de quejas.
+     */
+    public FeedbackCountDTO countComplaintsByHoodId(Long hoodId) {
+        long count = feedbackRepository.countByHoodId(hoodId);
+        return new FeedbackCountDTO(hoodId, count);
+    }
+
+
+    /**
+     * Devuelve todas las quejas asociadas a un ID de barrio.
+     * @param hoodId El ID del barrio.
+     * @return una lista de objetos Feedback.
+     */
+    public List<Feedback> findAllByHoodId(Long hoodId) {
+        return feedbackRepository.findByHoodId(hoodId);
     }
 }
