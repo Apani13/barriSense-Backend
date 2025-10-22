@@ -1,8 +1,8 @@
 package com.barriSenseBack.barrisense_feedback_api.config;
 
-import com.barriSenseBack.barrisense_feedback_api.entity.Feedback;
+import com.barriSenseBack.barrisense_feedback_api.entity.Complaint;
 import com.barriSenseBack.barrisense_feedback_api.entity.Neighborhood;
-import com.barriSenseBack.barrisense_feedback_api.repository.FeedbackRepository;
+import com.barriSenseBack.barrisense_feedback_api.repository.ComplaintRepository;
 import com.barriSenseBack.barrisense_feedback_api.repository.NeighborhoodRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -32,12 +32,12 @@ public class DataInitializer implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);
 
-    private final FeedbackRepository feedbackRepository;
+    private final ComplaintRepository complaintRepository;
     private final NeighborhoodRepository neighborhoodRepository;
 
     @Autowired
-    public DataInitializer(FeedbackRepository feedbackRepository, NeighborhoodRepository neighborhoodRepository) {
-        this.feedbackRepository = feedbackRepository;
+    public DataInitializer(ComplaintRepository complaintRepository, NeighborhoodRepository neighborhoodRepository) {
+        this.complaintRepository = complaintRepository;
         this.neighborhoodRepository = neighborhoodRepository;
     }
 
@@ -45,7 +45,7 @@ public class DataInitializer implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-        if (feedbackRepository.count() > 0) {
+        if (complaintRepository.count() > 0) {
             log.info("La base de datos de feedbacks ya está poblada. No se crearán nuevos datos.");
             return;
         }
@@ -85,8 +85,14 @@ public class DataInitializer implements CommandLineRunner {
             Long userIdRandom = (long) (random.nextInt(50) + 1);
             String quejaRandom = quejas.get(random.nextInt(quejas.size()));
 
-            Feedback feedback = new Feedback(userIdRandom, barrioSeleccionado.getId(), barrioSeleccionado.getName(), quejaRandom);
-            feedbackRepository.save(feedback);
+            Complaint complaint = Complaint.builder()
+                    .userId(userIdRandom)
+                    .hoodId(barrioSeleccionado.getId())
+                    .hoodName(barrioSeleccionado.getName())
+                    .content(quejaRandom)
+                    .build();
+
+            complaintRepository.save(complaint);
         }
 
         log.info("¡Se han creado {} feedbacks de prueba!", numeroDeFeedbacksACrear);

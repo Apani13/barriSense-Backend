@@ -1,62 +1,36 @@
 package com.barriSenseBack.barrisense_feedback_api.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "barrios")
 public class Neighborhood {
 
     @Id
-
+    @Getter
+    @Setter
     private Long id;
 
     @Column(name = "nombre")
+    @Getter @Setter
     private String name;
 
+    @Getter @Setter
     private String district;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "neighborhood_postal_codes", joinColumns = @JoinColumn(name = "neighborhood_id"))
     @Column(name = "postal_code")
+    @Getter @Setter
     private List<Long> cp;
 
 
-    public Neighborhood() {
-    }
 
-    // --- Getters y Setters ---
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public List<Long> getCp() {
-        return cp;
-    }
-
-    public void setCp(List<Long> cp) {
-        this.cp = cp;
-    }
 }

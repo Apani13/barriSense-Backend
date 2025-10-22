@@ -1,8 +1,8 @@
 package com.barriSenseBack.barrisense_feedback_api.repository;
 
 
-import com.barriSenseBack.barrisense_feedback_api.dto.FeedbackCountDTO;
-import com.barriSenseBack.barrisense_feedback_api.entity.Feedback;
+import com.barriSenseBack.barrisense_feedback_api.dto.ComplaintCountDTO;
+import com.barriSenseBack.barrisense_feedback_api.entity.Complaint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Repository
-public interface FeedbackRepository extends JpaRepository<Feedback,Long> {
+public interface ComplaintRepository extends JpaRepository<Complaint,Long> {
 
 
     /**
@@ -30,7 +30,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback,Long> {
      * @param hoodId El ID del barrio.
      * @return una lista de las quejas (objetos Feedback).
      */
-    List<Feedback> findByHoodId(Long hoodId);
+    List<Complaint> findByHoodId(Long hoodId);
 
 
     /**
@@ -39,5 +39,5 @@ public interface FeedbackRepository extends JpaRepository<Feedback,Long> {
      * @return Una lista de FeedbackCountDTO, uno por cada barrio que tenga quejas.
      */
     @Query("SELECT new com.barriSenseBack.barrisense_feedback_api.dto.FeedbackCountDTO(f.hoodId, COUNT(f)) FROM Feedback f GROUP BY f.hoodId")
-    List<FeedbackCountDTO> countAllGroupByHoodId();
+    List<ComplaintCountDTO> countAllGroupByHoodId();
 }

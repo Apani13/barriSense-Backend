@@ -1,9 +1,9 @@
 package com.barriSenseBack.barrisense_feedback_api.service;
 
 
-import com.barriSenseBack.barrisense_feedback_api.dto.FeedbackCountDTO;
-import com.barriSenseBack.barrisense_feedback_api.entity.Feedback;
-import com.barriSenseBack.barrisense_feedback_api.repository.FeedbackRepository;
+import com.barriSenseBack.barrisense_feedback_api.dto.ComplaintCountDTO;
+import com.barriSenseBack.barrisense_feedback_api.entity.Complaint;
+import com.barriSenseBack.barrisense_feedback_api.repository.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +11,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FeedbackService {
+public class ComplaintService {
 
-    private final FeedbackRepository feedbackRepository;
+    private final ComplaintRepository complaintRepository;
 
     @Autowired
-    public FeedbackService(FeedbackRepository feedbackRepository) {
-        this.feedbackRepository = feedbackRepository;
+    public ComplaintService(ComplaintRepository complaintRepository) {
+        this.complaintRepository = complaintRepository;
     }
 
     /**
      * Recupera todos los feedbacks de la base de datos.
      * @return una lista de feedbacks.
      */
-    public List<Feedback> findAll() {
+    public List<Complaint> findAll() {
         // Llama directamente al método findAll() que nos da JpaRepository.
-        return feedbackRepository.findAll();
+        return complaintRepository.findAll();
     }
 
     /**
@@ -34,9 +34,9 @@ public class FeedbackService {
      * @param id El ID del feedback a buscar.
      * @return un Optional que contiene el feedback si se encuentra, o un Optional vacío si no.
      */
-    public Optional<Feedback> findById(Long id) {
+    public Optional<Complaint> findById(Long id) {
 
-        return feedbackRepository.findById(id);
+        return complaintRepository.findById(id);
     }
 
 
@@ -45,9 +45,9 @@ public class FeedbackService {
      * @param hoodId El ID del barrio.
      * @return un DTO con el ID del barrio y el total de quejas.
      */
-    public FeedbackCountDTO countComplaintsByHoodId(Long hoodId) {
-        long count = feedbackRepository.countByHoodId(hoodId);
-        return new FeedbackCountDTO(hoodId, count);
+    public ComplaintCountDTO countComplaintsByHoodId(Long hoodId) {
+        long count = complaintRepository.countByHoodId(hoodId);
+        return new ComplaintCountDTO(hoodId, count);
     }
 
 
@@ -56,8 +56,8 @@ public class FeedbackService {
      * @param hoodId El ID del barrio.
      * @return una lista de objetos Feedback.
      */
-    public List<Feedback> findAllByHoodId(Long hoodId) {
-        return feedbackRepository.findByHoodId(hoodId);
+    public List<Complaint> findAllByHoodId(Long hoodId) {
+        return complaintRepository.findByHoodId(hoodId);
     }
 
 
@@ -65,12 +65,12 @@ public class FeedbackService {
      * Devuelve una lista con el total de quejas para cada barrio.
      * @return una lista de objetos FeedbackCountDTO.
      */
-    public List<FeedbackCountDTO> countAllComplaintsByNeighborhood() {
-        return feedbackRepository.countAllGroupByHoodId();
+    public List<ComplaintCountDTO> countAllComplaintsByNeighborhood() {
+        return complaintRepository.countAllGroupByHoodId();
     }
 
 
-    public Feedback save(Feedback feedback) {
-        return feedbackRepository.save(feedback);
+    public Complaint save(Complaint feedback) {
+        return complaintRepository.save(feedback);
     }
 }
