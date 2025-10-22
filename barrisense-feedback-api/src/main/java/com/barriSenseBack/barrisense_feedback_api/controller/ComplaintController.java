@@ -3,6 +3,8 @@ package com.barriSenseBack.barrisense_feedback_api.controller;
 import com.barriSenseBack.barrisense_feedback_api.dto.ComplaintCountDTO;
 import com.barriSenseBack.barrisense_feedback_api.entity.Complaint;
 import com.barriSenseBack.barrisense_feedback_api.service.ComplaintService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +17,11 @@ public class ComplaintController {
 
     private final ComplaintService complaintService;
 
+    private static final Logger logger = LoggerFactory.getLogger(ComplaintController.class);
+
     @Autowired
     public ComplaintController(ComplaintService complaintService) {
+
         this.complaintService = complaintService;
     }
 
@@ -27,7 +32,8 @@ public class ComplaintController {
      * @return una lista de todas las quejas.
      */
     @GetMapping
-    public List<Complaint> getAllComplaints() { // <-- Método renombrado
+    public List<Complaint> getAllComplaints() {
+        ComplaintControllerLogEvent.REQUEST_GET_ALL.log(logger);
         return complaintService.findAll();
     }
 
@@ -39,9 +45,10 @@ public class ComplaintController {
      * @return La queja encontrada o un 404 Not Found si no existe.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Complaint> getComplaintById(@PathVariable Long id) { // <-- Método renombrado
+    public ResponseEntity<Complaint> getComplaintById(@PathVariable Long id) {
+        ComplaintControllerLogEvent.REQUEST_GET_BY_ID.log(logger, id);
         return complaintService.findById(id)
-                .map(complaint -> ResponseEntity.ok(complaint)) // <-- Variable renombrada
+                .map(complaint -> ResponseEntity.ok(complaint))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -53,6 +60,7 @@ public class ComplaintController {
      */
     @GetMapping("/count/by-neighborhood/{hoodId}")
     public ComplaintCountDTO getComplaintCountByNeighborhood(@PathVariable Long hoodId) {
+
         return complaintService.countComplaintsByHoodId(hoodId);
     }
 
@@ -63,7 +71,8 @@ public class ComplaintController {
      * @return Una lista de objetos Complaint en formato JSON.
      */
     @GetMapping("/by-neighborhood/{hoodId}")
-    public List<Complaint> getComplaintsByNeighborhood(@PathVariable Long hoodId) { // <-- Método renombrado
+    public List<Complaint> getComplaintsByNeighborhood(@PathVariable Long hoodId) {
+        ComplaintControllerLogEvent.REQUEST_COUNT_BY_HOOD.log(logger, hoodId);
         return complaintService.findAllByHoodId(hoodId);
     }
 
@@ -74,6 +83,7 @@ public class ComplaintController {
      */
     @GetMapping("/count/by-neighborhood/all")
     public List<ComplaintCountDTO> getAllComplaintCountsByNeighborhood() {
+        ComplaintControllerLogEvent.REQUEST_GET_ALL_COUNTS.log(logger);
         return complaintService.countAllComplaintsByNeighborhood();
     }
 
@@ -84,8 +94,9 @@ public class ComplaintController {
      * @return La queja guardada, envuelta en una respuesta HTTP 200 OK.
      */
     @PostMapping
-    public ResponseEntity<Complaint> createComplaint(@RequestBody Complaint complaint) { // <-- Método y parámetro renombrados
-        Complaint savedComplaint = complaintService.save(complaint); // <-- Variable renombrada
+    public ResponseEntity<Complaint> createComplaint(@RequestBody Complaint complaint) {
+        ComplaintControllerLogEvent.REQUEST_CREATE.log(logger);
+        Complaint savedComplaint = complaintService.save(complaint);
         return ResponseEntity.ok(savedComplaint);
     }
 }

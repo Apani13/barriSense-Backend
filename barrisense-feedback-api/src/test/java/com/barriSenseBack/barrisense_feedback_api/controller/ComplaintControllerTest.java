@@ -33,7 +33,7 @@ class ComplaintControllerTest {
     @TestConfiguration
     static class TestConfig {
         @Bean
-        public ComplaintService complaintService() { // <-- Método renombrado
+        public ComplaintService complaintService() {
             return Mockito.mock(ComplaintService.class);
         }
     }
@@ -62,7 +62,7 @@ class ComplaintControllerTest {
         when(complaintService.findById(1L)).thenReturn(Optional.of(complaint));
 
         // ACT & ASSERT
-        mockMvc.perform(get("/api/complaints/1")) // <-- URL ACTUALIZADA
+        mockMvc.perform(get("/api/complaints/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.hoodName").value("Hood1"));
@@ -74,7 +74,7 @@ class ComplaintControllerTest {
         when(complaintService.findById(99L)).thenReturn(Optional.empty());
 
         // ACT & ASSERT
-        mockMvc.perform(get("/api/complaints/99")) // <-- URL ACTUALIZADA
+        mockMvc.perform(get("/api/complaints/99"))
                 .andExpect(status().isNotFound());
     }
 
@@ -86,10 +86,10 @@ class ComplaintControllerTest {
         when(complaintService.countComplaintsByHoodId(hoodId)).thenReturn(dto);
 
         // ACT & ASSERT
-        mockMvc.perform(get("/api/complaints/count/by-neighborhood/2")) // <-- URL ACTUALIZADA
+        mockMvc.perform(get("/api/complaints/count/by-neighborhood/2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.neighborhoodId").value(2))
-                .andExpect(jsonPath("$.complaintCount").value(42)); // <-- JSONPath CORREGIDO
+                .andExpect(jsonPath("$.complaintCount").value(42));
     }
 
     @Test
@@ -102,7 +102,7 @@ class ComplaintControllerTest {
         when(complaintService.findAllByHoodId(hoodId)).thenReturn(filteredList);
 
         // ACT & ASSERT
-        mockMvc.perform(get("/api/complaints/by-neighborhood/3")) // <-- URL ACTUALIZADA
+        mockMvc.perform(get("/api/complaints/by-neighborhood/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
                 .andExpect(jsonPath("$[0].hoodId").value(3));
@@ -117,13 +117,13 @@ class ComplaintControllerTest {
         when(complaintService.countAllComplaintsByNeighborhood()).thenReturn(mockDtoList);
 
         // ACT & ASSERT
-        mockMvc.perform(get("/api/complaints/count/by-neighborhood/all")) // <-- URL ACTUALIZADA
+        mockMvc.perform(get("/api/complaints/count/by-neighborhood/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.size()").value(2))
                 .andExpect(jsonPath("$[0].neighborhoodId").value(1))
-                .andExpect(jsonPath("$[0].complaintCount").value(15)) // <-- JSONPath CORREGIDO
+                .andExpect(jsonPath("$[0].complaintCount").value(15))
                 .andExpect(jsonPath("$[1].neighborhoodId").value(2))
-                .andExpect(jsonPath("$[1].complaintCount").value(42)); // <-- JSONPath CORREGIDO
+                .andExpect(jsonPath("$[1].complaintCount").value(42));
     }
 }

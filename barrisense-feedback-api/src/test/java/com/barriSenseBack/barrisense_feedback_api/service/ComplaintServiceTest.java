@@ -88,7 +88,7 @@ class ComplaintServiceTest {
         // ASSERT
         assertNotNull(result);
         assertEquals(hoodId, result.neighborhoodId());
-        assertEquals(expectedCount, result.complaintCount()); // <-- CAMPO DEL DTO RENOMBRADO
+        assertEquals(expectedCount, result.complaintCount());
     }
 
     @Test
