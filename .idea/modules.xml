@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/barrisense-feedback-api.iml" filepath="$PROJECT_DIR$/.idea/barrisense-feedback-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/barrisense-feedback-api/barrisense-feedback-api.iml" filepath="$PROJECT_DIR$/barrisense-feedback-api/barrisense-feedback-api.iml" />
     </modules>
   </component>
 </project>
