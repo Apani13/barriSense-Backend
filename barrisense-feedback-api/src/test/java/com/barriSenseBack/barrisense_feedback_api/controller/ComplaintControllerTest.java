@@ -19,8 +19,10 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.security.test.context.support.WithMockUser;
 
 @WebMvcTest(ComplaintController.class)
+@WithMockUser(username = "testuser", roles = {"USER"})
 class ComplaintControllerTest {
 
     @Autowired

@@ -25,19 +25,30 @@ public class User {
     private String username;
 
     @Column(nullable = false, unique = true)
-    @Getter
+    @Getter @Setter
     private String email;
 
     @Column(nullable = false)
     @Getter @Setter
     private String password;
 
-    // Role stuff
-    // @ManyToMany(...)
-    // private Set<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Getter @Setter
+    private List<Role> roles = new ArrayList<>();
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+
+        // Role stuff
+        // @ManyToMany(...)
+        // private Set<Role> roles;
 
 
-
+    }
 
 }
 
