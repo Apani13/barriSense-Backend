@@ -19,15 +19,32 @@ target/
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
 ### VS Code ###
 .vscode/
+
+### config local file
+application.properties
+application-*.properties
+*.env
+.env.local
+.env.*.local
+*.keystore
+.env
+
+
+### Logs ###
+logs/
+*.log
+
+### System ###
+.DS_Store
+Thumbs.db
+
+### Security ###
+
+*.keystore
+*.jks
+*.p12
+*.cert
+*.ke
+
